@@ -1,4 +1,5 @@
-"""telemedicine URL Configuration
+"""
+telemedicine URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -18,7 +19,8 @@ from django.urls import path
 from patient import views
 
 urlpatterns = [
-    path('home/', views.display),
-    path('time/', views.displaydateTime),
-    path('template/', views.renderTemplate),
+    path('', views.index),
+    path('pat_details/', views.patientView),
+    path('pat_form/', views.PatientFormView),
+
 ]

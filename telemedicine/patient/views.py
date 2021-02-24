@@ -1,16 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import datetime
+from patient.models import Patient
+from patient.forms import PatientForm 
+
 
 # Create your views here.
-def display(request):
-    return HttpResponse("<h1>Eureka Worked!!!<h1/>")
+def index(request):
+    return render(request, 'patient/index.html')
 
-def displaydateTime(request):
-    dt=datetime.datetime.now()
-    s="<b>current date time is: </b>"+str(dt)
-    return HttpResponse(s)
+def patientView(request):
+    patients = Patient.objects.all()
+    patientDict = {'patients':patients}
+    return render(request, 'patient/index.html', context=patientDict)
 
-def renderTemplate(request):
-    Dict = {"name":"rajeev"}
-    return render(request, 'patient/index.html',context=Dict)
+def PatientFormView(request):
+    form=PatientForm ()
+    formDict = {'form':form}
+    if request.method=='POST':
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return index(request)
+    return render(request, 'patient/index.html',context=formDict)
